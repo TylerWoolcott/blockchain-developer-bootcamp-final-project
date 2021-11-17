@@ -1,5 +1,16 @@
-My smart contract implements the following design patterns:
+# Design Pattern Decisions
 
-Inheritance and Interfaces: I am importing and using functions and modifiers from Ownable and ReentrancyGuard, OpenZeppelin's abstract contracts.
+## Access Control Design Patterns
 
-Access Control Design Patterns: my mint function is callable only by the contract owner. I using Ownable to enforce this.
+The Ownable design pattern has been implemented to give only the contract owner permission to pause and unpause the contract.
+
+## Inheritance and Interfaces
+The contract inherits from multiple parent contracts:
+
+- **ERC721**: The standard interface for non-fungable tokens.
+- **ERC721Enumerable**: Extends the ERC721 contract by adding enumerability of all the token ids in the contract as well as all token ids owner by each account. Provides additional functions: totalSupply(), tokenByIndex() and tokenOfOwnerByIndex()
+- **ERC721URIStorage**: provides support for storing token URIs.
+**ERC721Counters**: Provides counters that can only be incremented, decremented or reset. Used to track the number of issuing ERC721 ids.
+- **Pausable**: Allows the contract to be paused in an emergency whilst a remidiation is pending.
+- **Ownable**: Creates a single 'owner' role, which works for a simple project like this. However as a project grows in complexity, it's recommended to look at changing this to use the AccessControl module to create more granular roles.
+

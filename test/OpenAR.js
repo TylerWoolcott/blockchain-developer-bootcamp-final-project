@@ -2,37 +2,28 @@ const OpenAR = artifacts.require("OpenAR");
 const { BN, constants, expectEvent, expectRevert, balance } = require('@openzeppelin/test-helpers');
 const { ZERO_ADDRESS } = constants;
 
-/* Test Accounts Usage
-   accounts[0] - Deployed the contract and is contract owner
-   accounts[1] - Mints assets[0] and assets[1] NFT
-   accounts[2] - Used as caller that owns / buys nothing
-   accounts[3] - Buys assets[0] licence
-   accounts[4] - Buys assets[0] licence
-   accounts[5] - Mints assets[1] NFT
-   accounts[6] - Tests transfer of assets[2]
-   accounts[7] - Granted approvals to transfer NFTs
-   accounts[8] - Also Granted approvals to transfer NFTs
-*/
+// Generating and assigning a list of accounts to test against
+
 contract("OpenAR", function (accounts) {
   const assets = [{
     owner: accounts[1],
-    tokenURI: "https://www.test.com/metadata0.json",
-    assetURI: "https://www.test.com/photo0.jpg",
+    tokenURI: "https://www.arweave-test.xyz/metadataA.json",
+    assetURI: "https://www.arweave-test.xyz/imageB.jpg",
     price: new BN(web3.utils.toWei('0.001'))
   },{
     owner: accounts[5],
-    tokenURI: "https://www.test.com/metadata1.json",
-    assetURI: "https://www.test.com/photo1.jpg",
+    tokenURI: "https://arweave-test.xyz/metadataB.json",
+    assetURI: "https://www.arweave-test.xyz/imageC.jpg",
     price: new BN(web3.utils.toWei('0.001'))    
   },{
     owner: accounts[1],
-    tokenURI: "https://www.test.com/metadata2.json",
-    assetURI: "https://www.test.com/photo2.jpg",
+    tokenURI: "https://www.arweave-test.xyz/metadata2.json",
+    assetURI: "https://www.arweave-test.xyz/image2.jpg",
     price: new BN(web3.utils.toWei('0.001'))    
   },{
     owner: accounts[1],
-    tokenURI: "https://www.test.com/metadata3.json",
-    assetURI: "https://www.test.com/photo3.jpg",
+    tokenURI: "https://www.arweave-test.xyz/metadata3.json",
+    assetURI: "https://arweave-test.xyz/image3.jpg",
     price: new BN(web3.utils.toWei('0.001'))    
   }];
   const NFTName = 'OpenAR';
@@ -40,6 +31,7 @@ contract("OpenAR", function (accounts) {
   const invalidTokenId = 20;
   let OpenARInstance;
   
+  // deploy test contract 
   beforeEach(async function() {
     OpenARInstance = await OpenAR.deployed();
   });
@@ -49,19 +41,14 @@ contract("OpenAR", function (accounts) {
       await OpenAR.deployed();
       await assert.isTrue(true);
     });
+    it("contract should not be paused upon deployment", async () => {
+      assert.isFalse(
+        await OpenARInstance.paused(),
+        "contract should not be paused upon deployment");
+    });
   });
 
-  // beforeEach(async () => {
-  //   instance = await OpenAR.new();
-  // });
-  // it("is owned by the owner", async () => {
-  //   assert.equal(
-  //     await instance.owner.call(),
-  //     contractOwner,
-  //     "owner is not correct"
-  //   );
-  // });
-
+  // test mint function 
   describe("mint", function() {
     it("should mint a new NFT and emit transfer event when NFT is created (`from` == 0)", async function () {
       const retCreate = await OpenARInstance.mint(assets[0].tokenURI, assets[0].price, assets[0].owner, { from: assets[0].owner });
@@ -70,17 +57,24 @@ contract("OpenAR", function (accounts) {
     });
   });
 
+  // test that metadata URI can be read 
   describe("ERC721: Metadata", function() {
     it("tokenURI should return metadata URI", async function() {
       assert.equal(await OpenARInstance.tokenURI.call(assets[0].tokenId, { from: accounts[2] }), assets[0].tokenURI, "tokenURI should be returned");
     });
+
+    // test return name
     it("name should return the NFT name", async function() {
       assert.equal(await OpenARInstance.name.call({ from: accounts[2] }), NFTName, "name should be returned");
     });
+
+       // test return symbol
     it("should return the NFT symbol", async function() {
       assert.equal(await OpenARInstance.symbol.call({ from: accounts[2] }), NFTSymbol, "symbol should be returned");
     });
   });
+
+  // test owner's balance 
   describe("ERC721: balanceOf", function() {
     it("should return count of NFT's owner", async function() {
       assert.equal(await OpenARInstance.balanceOf.call(assets[0].owner, { from: accounts[2] }), 1, "number of NFTs returned should be correct");
@@ -117,7 +111,13 @@ contract("OpenAR", function (accounts) {
     });
   });
 
-  
+  // test pausing the contract
+  describe("Pausing the contract", () => {
+    
+    it("only owner should be able to pause the contract", async () => {});
+  });
+
+  // test Nft supply is enumerable 
   describe("ERC721: Enumerable", function() {
     let totalSupply;
     it("totalSupply returns a count of valid NFTs tracked by this contract", async function() {

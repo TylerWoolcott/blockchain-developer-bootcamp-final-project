@@ -1,8 +1,11 @@
 # OpenAR
 
-This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0x208615C86b560D4A5fe5e40F75828e3761B08d28](https://ropsten.etherscan.io/address/0x208615C86b560D4A5fe5e40F75828e3761B08d28).
+This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0](https://ropsten.etherscan.io/address/0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0).
 
-My public Ethereum Account: [0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0](https://etherscan.io/address/0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0)
+Link to the frontend website hosted on Vercel: 
+https://frontend-nqk4sxecp-tylerwoolcott.vercel.app/
+
+My public Ethereum mainet Account (for NFT certificate): [0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0](https://etherscan.io/address/0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0)
 
 ## Table of Contents
 
@@ -10,7 +13,6 @@ My public Ethereum Account: [0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0](https:/
 - [Directory Structure](#directory-structure)
 - [Installation](#installation)
 - [Deployment](#deployment)
-- [Documentation](#documentation)
 
 ## About the Project
 
@@ -45,11 +47,18 @@ Alice and Bob can check their NFT balance and also who owns a particular NFT by 
 
 ## Directory Structure
 
-The project was bootstrapped from [Create React App](https://reactjs.org/docs/getting-started.html). The ``client/`` folder contains the React frontend app, everything outside of this folder contains the smart contract code. Note, that the smart contract code has its own ``package.json`` and ``node_modules/`` for the smart contract's dependencies (which are different from the ones inside of ``client/``). The ``test/`` folder contains the smart contract tests.
+The root directory of the project contains the following sub-directories:
 
-The most notable component of the ``client/src/`` folder is ``client/src/utils`` - the ABI for the smart contract and dependencies.
+- client: contains all the frontend code, including all dependencies and configuration.
+- contracts: contains all the solidity code. 
+- migrations: contains the migration scripts for deploying solidity contracts to the blockchain.
+- node_modules: contains all smart contract dependencies.
+- tests: contains the smart contract unit tests (written in Javascript). 
+- design patterns: `design_pattern_decisions.md` 
+- avoiding common attacks: ``avoiding_common_attacks.md`` 
+- deployed contract address and testnet: `deployed_address.txt` 
 
-## Installation and Testing
+## Installation 
 
 ### Prerequisites
 
@@ -58,33 +67,79 @@ The most notable component of the ``client/src/`` folder is ``client/src/utils``
 3. Optional: install [Ganache](https://www.trufflesuite.com/ganache) - you can use any blockchain emulator, but I will be using Ganache in the installation instructions
 4. Install [MetaMask](https://metamask.io/)
 
-### Smart Contract
-
-### Frontend
-
-1. Clone this repo and `cd` into the cloned `blockchain-developer-bootcamp-final-project/client`
-2. `npm i` - installs the dependencies for the fronted
-3. `npm run start`
-4. Go to `http://localhost:3000` in your browser. 
-
 ## Deployment
 
-### Smart Contract
+To start the dapp locally requires two separate tasks:
 
-The instructions are walking through the deployment of the contract to Ropsten via [Infura](https://infura.io/). 
-1. Create an `.env` file inside `blockchain-developer-bootcamp-final-project`. 
-2. Copy the contents of `.env.sample` to `.env` 
-3. Pick an address that is going to deploy the contract (and make sure that address has funds) and fill out its mnemonic in the `MNEMONIC` variable in the .env file. 
-4. Create an Infura account - follow [these](https://blog.infura.io/getting-started-with-infura-28e41844cc89/) directions up to and including Step 2. Then under endpoints you will see a URL of the format `https://<network>.infura.io/v3/YOUR-PROJECT-ID`. Select ROSTEN in the "Endpoints" dropdown if you are following along this example. Copy tha URL in the `INFURA_URL`variable. 
-5. In `blockchain-developer-bootcamp-final-project/truffle-config.js` uncomment lines 2 - 7 and 19-25. In this patricular case we will be deploying the contract to Ropsten, but it is fairly straightforward to deploy the contract to other Testnets or Mainnet. 
-6. Run `truffle migrate --network ropsten` 
+- Starting the frontend
 
-## Documentation 
+- Deploying the smart contract to either a development blockchain or a testnet such as Ropsten.
 
-Design Patterns and Avoiding Common Attacks: 
-- Refer to: `avoiding_common_attacks.md` and `design_pattern_decisions.md` files in project root directory.
+### Starting the frontend
 
-Deployed contract address and testnet:
-- Refer to: `deployed_address.txt` file in project root directory.
+Navigate to the client directory:
 
-**DO NOT UPLOAD SENSITIVE INFORMATION TO GITHUB OR A PUBLIC SITE!** 
+``cd client``
+
+Install the dependencies
+
+``npm install``
+
+Start the application
+
+``npm run start``
+
+In the browser, visit:
+
+``localhost:3000``
+
+### Deploying the smart contract
+
+In a new terminal, navigate to the project root and install the projects dependencies
+
+``npm install``
+
+Also install ganache-cli
+
+``npm install -g ganache-cli``
+
+### Deploying to a local development network
+
+Start a local development blockchain on port 8545 by running:
+
+``gananche_cli``
+
+Deploy the contract
+
+``truffle migrate --network development --reset``
+
+**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 6). The newly generated ABI file can be copied to ``src > utils > OpenAR.json``
+
+### Deploying to the Ropsten testnet
+Use the the ``.env.sample`` file to create a ``.env`` file in the projects root directory and add the following:
+
+- Your metamask seed
+- Infura Websocket URL including API key.
+
+Example:
+
+``MNEMONIC="Your mnemonic here"``
+``INFURA_URL="wss://ropsten.infura.io/ws/v3/a87687a687ddgy8686sss"``
+
+Then deploy the contract
+
+``truffle migrate --network ropsten --reset``
+
+**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 6). The newly generated ABI file can be copied to ``src > utils > OpenAR.json``
+
+### Running the test suite
+
+If not done already, start a local development blockchain on port 8545 by running:
+
+``gananche_cli``
+
+To run the test suite simply enter the following command:
+
+``truffle test``
+
+
