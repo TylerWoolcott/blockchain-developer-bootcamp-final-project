@@ -1,9 +1,12 @@
 # OpenAR
 
-This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0](https://ropsten.etherscan.io/address/0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0).
+This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0xbF2655239055d1aDB2Ad2C0AA58FDe1BadB8d345](https://ropsten.etherscan.io/address/0xbF2655239055d1aDB2Ad2C0AA58FDe1BadB8d345).
 
 Link to the frontend website hosted on Vercel: 
 https://frontend-nqk4sxecp-tylerwoolcott.vercel.app/
+
+Link to video recording walking through the project: 
+https://www.loom.com/share/bfd49915e06d408bac07b311df496755
 
 My public Ethereum mainet Account (for NFT certificate): [0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0](https://etherscan.io/address/0x4CF10E2B109389189a3FC334cf2aFcB7383b3df0)
 
@@ -153,7 +156,7 @@ In the browser, visit:
 
 If not done already, start a local development blockchain on port 8545 by running:
 
-``gananche_cli``
+``gananche-cli``
 
 To run the test suite simply enter the following command:
 
