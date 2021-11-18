@@ -132,6 +132,7 @@ Use the ``.env.sample`` file to create a ``.env`` file in the project's root dir
 Example:
 
 ``INFURA_API_KEY="wss://ropsten.infura.io/ws/v3/a87687a687ddgy8686sss"``
+
 ``MNEMONIC="Your mnemonic here"``
 
 Open MetaMask and select Network:
