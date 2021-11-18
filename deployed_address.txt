@@ -1,1 +1,1 @@
-The OpenAR contract is deployed on Ropsten at 0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0
+The OpenAR contract is deployed on Ropsten at 0x89645A7a00Efdf00F0304122F46243Ce20df7395

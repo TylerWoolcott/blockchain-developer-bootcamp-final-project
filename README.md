@@ -53,7 +53,7 @@ The root directory of the project contains the following sub-directories:
 - contracts: contains all the solidity code. 
 - migrations: contains the migration scripts for deploying solidity contracts to the blockchain.
 - node_modules: contains all smart contract dependencies.
-- tests: contains the smart contract unit tests (written in Javascript). 
+- tests: contains the smart contract unit tests (written in Javascript). To run tests navigate to the project root directory and type ``truffle test`` in the terminal.
 - design patterns: `design_pattern_decisions.md` 
 - avoiding common attacks: ``avoiding_common_attacks.md`` 
 - deployed contract address and testnet: `deployed_address.txt` 
@@ -68,6 +68,8 @@ The root directory of the project contains the following sub-directories:
 4. Install [MetaMask](https://metamask.io/)
 
 ## Deployment
+
+``git clone`` this repository to your local repo.
 
 To start the dapp locally requires two separate tasks:
 
@@ -95,13 +97,9 @@ In the browser, visit:
 
 ### Deploying the smart contract
 
-In a new terminal, navigate to the project root and install the projects dependencies
+In a new terminal, navigate to the project root and install the project's dependencies
 
 ``npm install``
-
-Also install ganache-cli
-
-``npm install -g ganache-cli``
 
 ### Deploying to a local development network
 
@@ -109,28 +107,46 @@ Start a local development blockchain on port 8545 by running:
 
 ``gananche_cli``
 
-Deploy the contract
+In a new terminal, navigate to the project root and deploy the contract
 
-``truffle migrate --network development --reset``
+``truffle migrate --network development --reset`` 
 
-**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 6). The newly generated ABI file can be copied to ``src > utils > OpenAR.json``
+**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 6). 
+
+In the browser, visit:
+
+``localhost:3000``
+
+Open MetaMask and select Network:
+
+``Localhost 8545`` 
+
+Import the private keys from ``Account(0)`` and ``Account(1)`` from ``ganache-cli`` to MetaMask to start testing.
 
 ### Deploying to the Ropsten testnet
-Use the the ``.env.sample`` file to create a ``.env`` file in the projects root directory and add the following:
+Use the ``.env.sample`` file to create a ``.env`` file in the project's root directory and add the following:
 
-- Your metamask seed
-- Infura Websocket URL including API key.
+- Your metamask mnemonic
+- Infura **Websocket** URL including API key.
 
 Example:
 
+``INFURA_API_KEY="wss://ropsten.infura.io/ws/v3/a87687a687ddgy8686sss"``
 ``MNEMONIC="Your mnemonic here"``
-``INFURA_URL="wss://ropsten.infura.io/ws/v3/a87687a687ddgy8686sss"``
 
-Then deploy the contract
+Open MetaMask and select Network:
+
+``Ropsten`` 
+
+Then deploy the contract:
 
 ``truffle migrate --network ropsten --reset``
 
-**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 6). The newly generated ABI file can be copied to ``src > utils > OpenAR.json``
+**Important**: After redeploying you will need to add the new address of OpenAR contract to ``App.js`` (line 8). Copy the newly generated ABI file in the ``build`` directory located in the project root to ``src > utils > OpenAR.json``
+
+In the browser, visit:
+
+``localhost:3000``
 
 ### Running the test suite
 
