@@ -1,6 +1,6 @@
 # OpenAR
 
-This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0xbF2655239055d1aDB2Ad2C0AA58FDe1BadB8d345](https://ropsten.etherscan.io/address/0xbF2655239055d1aDB2Ad2C0AA58FDe1BadB8d345).
+This is a final project for Consensys Blockchain Developer Bootcamp 2021. It is deployed on Ropsten at [0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0](https://ropsten.etherscan.io/address/0xdF41435F04AfF150e247ee3DFE55f25E03cc9ED0).
 
 Link to the frontend website hosted on Vercel: 
 https://frontend-nqk4sxecp-tylerwoolcott.vercel.app/
